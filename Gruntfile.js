@@ -9,7 +9,7 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-
+  var pkg = require('./package.json');
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -29,6 +29,34 @@ module.exports = function (grunt) {
 
     // Project settings
     config: config,
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      development: {
+        options: {
+          remote: 'git@github.com:lminghe/lminghe.github.io.git',
+          branch: 'master'
+        }
+      },
+      production: {
+        options: {
+          remote: 'git@github.com:lminghe/lminghe.github.io.git',
+          branch: 'master',
+          tag: pkg.version
+        }
+      },
+      local: {
+        options: {
+          remote: '../',
+          branch: 'build'
+        }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -441,4 +469,5 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  grunt.loadNpmTasks('grunt-build-control');
 };
