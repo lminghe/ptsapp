@@ -12,6 +12,7 @@
   
   $.getScript('//cdnjs.cloudflare.com/ajax/libs/Faker/0.7.2/MinFaker.js')
   .done(function() {
+    alert("hello" + faker);
     var FormData = function(faker) {
 
       this.faker     = faker;
